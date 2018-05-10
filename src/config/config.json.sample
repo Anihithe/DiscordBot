@@ -1,0 +1,7 @@
+{
+    "discordToken": "[DiscordToken]",
+    "wowToken": "[WowAPIToken]",
+    "server": "[DefaultRealm]",
+    "guild": "[DefaultGuild]",
+    "lang": "[DefaultLang]"
+}
