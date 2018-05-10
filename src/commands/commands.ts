@@ -1,6 +1,6 @@
 import { XMLHttpRequest } from 'xmlhttprequest';
 import { IConfig } from '../interfaces/IConfig';
-import * as config from '../config/config.json'
+import * as config from '../config/config.json';
 
 export class Commands {
     private xhr: XMLHttpRequest = new XMLHttpRequest();
