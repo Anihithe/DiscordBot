@@ -28,13 +28,6 @@ export class Bot {
                 case 'help':
                     msg.reply(botCommands.help());
                     break;
-                case 'getoptions':
-                    msg.reply(botCommands.getOptions());
-                    break;
-                case 'setoption':
-                    var old = botCommands.setOptions(args);
-                    msg.reply(`${args[0]} : ${old} => ${args[1]}`);
-                    break;
                 case 'members':
                     if (args.length != 2) {
                         msg.reply('Use !members [Realm] [Guild]');
