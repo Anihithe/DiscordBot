@@ -27,7 +27,7 @@ Développeur junior C#, je profite de mon interet pour [Discord](https://discord
 
 ### Code improvements
 
-- [ ] Install & Use TSLint
+- [x] Install & Use TSLint
 - [ ] [Realm]? use default settings
 - [ ] Rework code organisation (events, commands)
 - [ ] Interfaces are usefull ?
