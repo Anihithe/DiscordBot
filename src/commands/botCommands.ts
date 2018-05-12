@@ -1,15 +1,13 @@
-import { XMLHttpRequest } from 'xmlhttprequest';
-import { Commands } from './commands';
-import * as wowApi from '../interfaces/IWowAPI';
-import { IConfig } from '../interfaces/IConfig';
-import * as config from '../config/config.json';
-
+import { XMLHttpRequest } from "xmlhttprequest";
+import * as config from "../config/config.json";
+import { IConfig } from "../interfaces/IConfig";
+import * as wowApi from "../interfaces/IWowAPI";
+import { Commands } from "./commands";
 
 export class BotCommands {
     private cmds: Map<string, string> = new Map();
     private commands: Commands;
     private options: IConfig = config.default as IConfig;
-
 
     constructor() {
         this.initMap();
@@ -17,53 +15,53 @@ export class BotCommands {
     }
 
     private initMap() {
-        this.cmds.set('!help', 'Retourne la liste des commandes disponibles.');
-        this.cmds.set('!ping', 'Test la communication avec le bot.');
-        this.cmds.set('!progress [Realm] [Character]', 'Retourne la progression de la guilde.');
-        this.cmds.set('!members [Realm] [Character]', 'Retourne la liste des membres de la guilde.');
+        this.cmds.set("!help", "Retourne la liste des commandes disponibles.");
+        this.cmds.set("!ping", "Test la communication avec le bot.");
+        this.cmds.set("!progress [Realm] [Character]", "Retourne la progression de la guilde.");
+        this.cmds.set("!members [Realm] [Character]", "Retourne la liste des membres de la guilde.");
     }
 
     public help(): string {
-        let help: string = '';
-        for (let [a, b] of this.cmds) {
-            help += a + '\t:' + b + '\r\n';
+        let help: string = "";
+        for (const [a, b] of this.cmds) {
+            help += a + "\t:" + b + "\r\n";
         }
         return help;
     }
 
     public getMembers(args: string[], callback: any): void {
-        let members: string[] = new Array();
-        let lsMembers: string = '';
-        this.commands.WowRequest('guild', (data: any) => {
-            for (let member of data.members) {
+        const members: string[] = new Array();
+        let lsMembers: string = "";
+        this.commands.WowRequest("guild", (data: any) => {
+            for (const member of data.members) {
                 members.push(member.character.name);
             }
             members.sort();
-            for (let member of members) {
-                lsMembers += member + '\r\n';
+            for (const member of members) {
+                lsMembers += member + "\r\n";
             }
             if (callback) {
                 callback(lsMembers);
             }
-        }, args, 'members');
+        }, args, "members");
     }
 
     public getMemberProgress(args: string[], callback: any): void {
-        this.commands.WowRequest('character', (data) => {
-            let result: string = '';
-            for (let raid of data.progression.raids) {
-                let raidContent = raid as wowApi.Raid;
+        this.commands.WowRequest("character", (data) => {
+            let result: string = "";
+            for (const raid of data.progression.raids) {
+                const raidContent = raid as wowApi.Raid;
                 if (this.options.raidsID.indexOf(raidContent.id) > -1) {
                     result += `\r\n${raidContent.name} :`;
-                    result += this.commands.RaidStatus('normal', raidContent.normal, raidContent.bosses);
-                    result += this.commands.RaidStatus('heroic', raidContent.heroic, raidContent.bosses);
-                    result += this.commands.RaidStatus('mythic', raidContent.mythic, raidContent.bosses);
+                    result += this.commands.RaidStatus("normal", raidContent.normal, raidContent.bosses);
+                    result += this.commands.RaidStatus("heroic", raidContent.heroic, raidContent.bosses);
+                    result += this.commands.RaidStatus("mythic", raidContent.mythic, raidContent.bosses);
                 }
             }
-            if (result === '') {
-                result += 'Error';
+            if (result === "") {
+                result += "Error";
             }
             callback(result);
-        }, args, 'progression');
+        }, args, "progression");
     }
 }
