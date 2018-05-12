@@ -20,7 +20,6 @@ export class Bot {
             console.log(`${new Date().toLocaleString(options.lang)} : ${msg.author.username} => ${msg.content}`);
             const args: string[] = msg.content.slice(1).trim().split(/ +/g);
             const command: string = args.shift().toLowerCase();
-            let response: string;
             switch (command) {
                 case "ping":
                     msg.reply("pong!");
@@ -29,7 +28,7 @@ export class Bot {
                     msg.reply(botCommands.help());
                     break;
                 case "members":
-                    if (args.length != 2) {
+                    if (args.length !== 2) {
                         msg.reply("Use !members [Realm] [Guild]");
                         break;
                     }
@@ -39,7 +38,7 @@ export class Bot {
                     msg.reply("Wait...");
                     break;
                 case "progress":
-                    if (args.length != 2) {
+                    if (args.length !== 2) {
                         msg.reply("Use !progress [Realm] [Character]");
                         break;
                     }

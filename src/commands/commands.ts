@@ -53,6 +53,10 @@ export class Commands {
                 if (callback) {
                     callback(JSON.parse(xhr.responseText));
                 }
+            } else {
+                if (callback) {
+                    callback("error");
+                }
             }
         };
         xhr.open("GET", sUrl, true); // true for asynchronous

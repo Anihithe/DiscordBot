@@ -1,4 +1,3 @@
-import { XMLHttpRequest } from "xmlhttprequest";
 import * as config from "../config/config.json";
 import { IConfig } from "../interfaces/IConfig";
 import * as wowApi from "../interfaces/IWowAPI";
@@ -12,13 +11,6 @@ export class BotCommands {
     constructor() {
         this.initMap();
         this.commands = new Commands();
-    }
-
-    private initMap() {
-        this.cmds.set("!help", "Retourne la liste des commandes disponibles.");
-        this.cmds.set("!ping", "Test la communication avec le bot.");
-        this.cmds.set("!progress [Realm] [Character]", "Retourne la progression de la guilde.");
-        this.cmds.set("!members [Realm] [Character]", "Retourne la liste des membres de la guilde.");
     }
 
     public help(): string {
@@ -49,19 +41,30 @@ export class BotCommands {
     public getMemberProgress(args: string[], callback: any): void {
         this.commands.WowRequest("character", (data) => {
             let result: string = "";
-            for (const raid of data.progression.raids) {
-                const raidContent = raid as wowApi.Raid;
-                if (this.options.raidsID.indexOf(raidContent.id) > -1) {
-                    result += `\r\n${raidContent.name} :`;
-                    result += this.commands.RaidStatus("normal", raidContent.normal, raidContent.bosses);
-                    result += this.commands.RaidStatus("heroic", raidContent.heroic, raidContent.bosses);
-                    result += this.commands.RaidStatus("mythic", raidContent.mythic, raidContent.bosses);
+            if (data !== "error") {
+                for (const raid of data.progression.raids) {
+                    const raidContent = raid as wowApi.Raid;
+                    if (this.options.raidsID.indexOf(raidContent.id) > -1) {
+                        result += `\r\n${raidContent.name} :`;
+                        result += this.commands.RaidStatus("normal", raidContent.normal, raidContent.bosses);
+                        result += this.commands.RaidStatus("heroic", raidContent.heroic, raidContent.bosses);
+                        result += this.commands.RaidStatus("mythic", raidContent.mythic, raidContent.bosses);
+                    }
                 }
-            }
-            if (result === "") {
-                result += "Error";
+                if (result === "") {
+                    result = "error";
+                }
+            } else {
+                result = "Realm or Character not found";
             }
             callback(result);
         }, args, "progression");
+    }
+
+    private initMap() {
+        this.cmds.set("!help", "Retourne la liste des commandes disponibles.");
+        this.cmds.set("!ping", "Test la communication avec le bot.");
+        this.cmds.set("!progress [Realm] [Character]", "Retourne la progression de la guilde.");
+        this.cmds.set("!members [Realm] [Character]", "Retourne la liste des membres de la guilde.");
     }
 }
