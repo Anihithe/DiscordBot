@@ -4,4 +4,5 @@ export interface IConfig {
     server:string;
     guild:string;
     lang:string;
+    raidsID:number[];
 }

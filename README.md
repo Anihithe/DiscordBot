@@ -18,7 +18,7 @@ Développeur junior C#, je profite de mon interet pour [Discord](https://discord
 - - [ ] Return Armory, RIO, WLog Links
 
 - [ ] !Progress [Realm] [Character]
-- - [ ] Return InProgress / Clean Status of LiveExp Raids (NM/HM/MM)
+- - [x] Return InProgress / Clean Status of LiveExp Raids (NM/HM/MM)
 - - [ ] Return Boss Progress if InProgress
 
 ### Discord
