@@ -66,5 +66,6 @@ export class BotCommands {
         this.cmds.set("!ping", "Test la communication avec le bot.");
         this.cmds.set("!progress [Realm] [Character]", "Retourne la progression de la guilde.");
         this.cmds.set("!members [Realm] [Character]", "Retourne la liste des membres de la guilde.");
+        this.cmds.set("!embed [Channel] [JSON Embed]", "Poste le message mis en forme dans le channel indiqué.");
     }
 }
