@@ -38,12 +38,12 @@ export class BotCommands {
         }, args, "members");
     }
 
-    public getMemberProgress(args: string[], callback: any): void {
+    public getCharacterProgress(args: string[], callback: any): void {
         this.commands.WowRequest("character", (data) => {
             let result: string = "";
             if (data !== "error") {
                 for (const raid of data.progression.raids) {
-                    const raidContent = raid as wowApi.Raid;
+                    const raidContent = raid as wowApi.IRaid;
                     if (this.options.raidsID.indexOf(raidContent.id) > -1) {
                         result += `\r\n${raidContent.name} :`;
                         result += this.commands.RaidStatus("normal", raidContent.normal, raidContent.bosses);
@@ -57,14 +57,32 @@ export class BotCommands {
             } else {
                 result = "Realm or Character not found";
             }
-            callback(result);
+            if (callback) {
+                callback(result);
+            }
+
         }, args, "progression");
+    }
+
+    public getCharacterInfo(args: string[], callback: any): void {
+        this.commands.WowRequest("character", (data) => {
+            let result: string = "";
+            if (data !== "error") {
+                result += "WIP"; // data.
+            } else {
+                result = "Realm or Character not found";
+            }
+            if (callback) {
+                callback(result);
+            }
+        }, args);
     }
 
     private initMap() {
         this.cmds.set("!help", "Retourne la liste des commandes disponibles.");
         this.cmds.set("!ping", "Test la communication avec le bot.");
-        this.cmds.set("!progress [Realm] [Character]", "Retourne la progression de la guilde.");
-        this.cmds.set("!members [Realm] [Character]", "Retourne la liste des membres de la guilde.");
+        this.cmds.set("!who [Realm] [Character]", "Retourne les information du personnage.");
+        this.cmds.set("!progress [Realm] [Character]", "Retourne la progression du personnage.");
+        this.cmds.set("!members [Realm] [Guild]", "Retourne la liste des membres de la guilde.");
     }
 }

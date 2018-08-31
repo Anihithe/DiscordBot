@@ -42,10 +42,18 @@ export class Bot {
                         msg.reply("Use !progress [Realm] [Character]");
                         break;
                     }
-                    botCommands.getMemberProgress(args, (data: string) => {
+                    botCommands.getCharacterProgress(args, (data: string) => {
                         msg.reply(data);
                     });
                     break;
+                case "who":
+                    if (args.length !== 2) {
+                        msg.reply("Use !who [Realm] [Character]");
+                        break;
+                    }
+                    botCommands.getCharacterInfo(args, (data: string) => {
+                        msg.reply(data);
+                    });
                 default:
                     msg.reply(`${command} are unknown command.`);
                     break;

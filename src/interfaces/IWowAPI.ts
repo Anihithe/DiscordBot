@@ -1,4 +1,4 @@
-export interface Boss {
+export interface IBoss {
     id: number;
     name: string;
     normalKills: number;
@@ -11,12 +11,12 @@ export interface Boss {
     mythicTimestamp?: number;
 }
 
-export interface Raid {
+export interface IRaid {
     name: string;
     lfr: number;
     normal: number;
     heroic: number;
     mythic: number;
     id: number;
-    bosses: Boss[];
+    bosses: IBoss[];
 }
