@@ -1,7 +1,8 @@
 import * as Discord from "discord.js";
 import { BotCommands } from "./commands/botCommands";
 import * as config from "./config/config.json";
-import { IConfig } from "./interfaces/IConfig";
+import IConfig from "./interfaces/IConfig";
+import * as liens_utiles from "./ressources/liens_utiles.json";
 
 const client = new Discord.Client();
 const botCommands = new BotCommands();
@@ -45,6 +46,23 @@ export class Bot {
                     botCommands.getMemberProgress(args, (data: string) => {
                         msg.reply(data);
                     });
+                    break;
+                case "liens_utiles":
+                    if (!msg.member.permissions.has("ADMINISTRATOR")) {
+                        msg.reply("You're not an Admin !");
+                        break;
+                    }
+                    if (msg.guild.channels.find((x) => x.name === "liens-utiles").type !== "text") {
+                        msg.reply("Channel is not a TextChannel.");
+                        break;
+                    }
+                    if (!msg.guild.channels.find((x) => x.name === "liens-utiles")) {
+                        msg.reply("Channel don't exists.");
+                        break;
+                    }
+                    const chan2Send = msg.guild.channels.find((x) => x.name === "liens-utiles") as Discord.TextChannel;
+                    const embed = liens_utiles.default;
+                    chan2Send.send({ embed });
                     break;
                 default:
                     msg.reply(`${command} are unknown command.`);
