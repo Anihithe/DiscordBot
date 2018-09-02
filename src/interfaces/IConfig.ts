@@ -1,4 +1,4 @@
-export interface IConfig {
+export default interface IConfig {
     discordToken: string;
     wowToken: string;
     server: string;
